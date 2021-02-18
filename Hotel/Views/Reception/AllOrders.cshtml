@@ -1,0 +1,52 @@
+﻿<head>
+    <link rel="stylesheet" href="~/css/gradientBut.css" />
+</head>
+@model IEnumerable<Hotel.Data.Entities.Split>
+<table class="table">
+    <tr>
+        <td>E-Mail</td>
+        <td>Номер телефона</td>
+        <td>Номер комнаты</td>
+        <td>Комнаты</td>
+        <td>Цена</td>
+        <td>Статус</td>
+        <td></td>
+    </tr>
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>@item.order.ClientName</td>
+    <td>@item.order.Phone</td>
+    <td>@item.room.Id</td>
+    <td>@item.room.Local</td>
+    <td>@item.room.Price</td>
+    @if (item.room.IsGived && !item.room.Available)
+    {
+        <td>Ключ выдан</td>
+    }
+    else if (!item.room.IsGived && !item.room.Available)
+    {
+        <td>Ключ не выдан</td>
+    }
+    else
+    {
+        <td>Завершено</td>
+    }
+    <td>
+        @if (!item.room.IsGived && !item.room.Available)
+        {
+            <a class="pressed-button" asp-controller="Reception" asp-action="GivedRoom" asp-route-roomId="@item.room.Id">Выдать</a>
+        }
+        else if (item.room.IsGived && !item.room.Available)
+        {
+            <a class="pressed-button" asp-controller="Reception" asp-action="TakeBackRoom" asp-route-roomId="@item.room.Id">Забрать</a>
+        }
+        else
+        {
+            <a class="pressed-button" asp-controller="Reception" asp-action="DeleteOrder" asp-route-roomId="@item.room.Id" asp-route-orderId="@item.order.Id">Удалить</a>
+        }
+    </td>
+
+</tr>
+    }
+</table>

@@ -1,0 +1,30 @@
+﻿<head>
+    <link rel="stylesheet" href="~/css/gradientBut.css" />
+</head>
+@model IEnumerable<Hotel.Data.Entities.Split>
+<table class="table">
+    <tr>
+        <td>Почта</td>
+        <td>Телефон</td>
+        <td>Время заказа</td>
+        <td>Вид номера</td>
+        <td>Цена</td>
+        <td></td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.order.Email</td>
+            <td>@item.order.Phone</td>
+            <td>@item.order.OrderTime</td>
+            <td>@item.room.Name</td>
+            <td>@item.room.Price</td>
+
+            <td>
+                <a class="pressed-button" asp-controller="Order" asp-action="DeleteOrder" 
+                   asp-route-orderId="@item.order.Id" asp-route-roomId="@item.room.Id">Отменить</a>
+            </td>
+        </tr>
+    }
+
+</table>

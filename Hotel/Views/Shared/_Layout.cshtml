@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] -[Hotel]-</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        li {
+            list-style-type: none;
+        }
+    </style>
+</head>
+<body style="background-image: radial-gradient(circle at 50% 50%, #ffffe4 0, #ffffe0 7.14%, #feffdc 14.29%, #f3ffd7 21.43%, #e6ffd3 28.57%, #d8fbcf 35.71%, #c7f7cc 42.86%, #b5f2c9 50%, #a1edc8 57.14%, #8de9c9 64.29%, #79e4cc 71.43%, #63e0d0 78.57%, #4bddd6 85.71%, #2ed9dd 92.86%, #00d6e4 100%);">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark border-bottom box-shadow" style="background-color: darkmagenta">
+            <ul class="collapse navbar-collapse" id="navbarSupportedContent">
+                <li>
+                    <a class="navbar navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><b>Отель</b></a>
+                </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="User" asp-action="Index">Управление пользователями</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Role" asp-action="RoleList">Управление ролями</a>
+                        </li>
+                    }
+                    @if (User.IsInRole("reception"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Reception" asp-action="AllOrders">Управление бронированием</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Reception" asp-action="AddRoom">Добавить комнату</a>
+                        </li>
+                    }
+                    @if (User.IsInRole("client"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Order" asp-action="MyOrders">Моя бронь</a>
+                        </li>
+                    }
+                }
+            </ul>
+            <div class="navbar-text">
+                <ul class="navbar-nav flex-sm-grow-2">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item text-light">
+                            Вы вошли как:
+                            <a class="navbar-brand" style="font-style:italic"><b>@User.Identity.Name.Substring(0, User.Identity.Name.LastIndexOf('@'))</b></a>
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" asp-controller="Account" asp-action="LogOut">
+                                <input type="submit" value="Выход" class="btn btn-outline-light">
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="btn btn-outline-secondary" asp-controller="Account" asp-action="Login">Войти</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-secondary" asp-controller="Account" asp-action="Register">Регистрация</a>
+                        </li>
+
+                    }
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container" mt-5>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer" style="text-align:center; background-color:darkmagenta">
+        <div class="nav-item">
+            <a class="btn btn-outline-light" style="box-sizing:content-box; width:25%;" asp-area="" asp-controller="Home" asp-action="About">О нас</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

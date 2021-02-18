@@ -1,0 +1,44 @@
+﻿<head>
+    <style>
+        .pressed-button {
+            text-decoration: none;
+            display: inline-block;
+            padding: 12px 40px;
+            margin: 10px 20px;
+            border-radius: 30px;
+            background-image: linear-gradient(90deg, rgba(190,187,231,1) 0%, rgba(187,33,187,1) 50%, rgba(31,2,56,1) 100%);
+            background-position: 100% 0;
+            background-size: 200% 200%;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            font-weight: 300;
+            color: white;
+            box-shadow: 0 16px 32px 0 rgba(0, 40, 120, .35);
+            transition: .5s;
+        }
+
+            .pressed-button:hover {
+                box-shadow: 0 0 0 0 rgba(0, 40, 120, 0);
+                background-position: 0 0;
+            }
+
+    </style>
+</head>
+@model Hotel.Data.Entities.Room
+<div style="text-align:center">
+    <h1>@Model.Name</h1>
+    <p></p>
+    <img class="img-thumbnail" width="500" height="500" src="@Model.Image" alt="@Model.Name" /><p></p>
+    <h3>Цена за сутки: @Model.Price₽</h3>
+    <h4>Количество комнат в номере: @Model.Local</h4>
+    <b>Описание: </b><i>@Model.Desc</i>
+    <div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            @if (User.IsInRole("client") && Model.Available == true)
+            {
+                <a class="pressed-button" asp-controller="Order" asp-action="Ordered" asp-route-roomkId="@Model.Id">Забронировать</a>
+            }
+        }
+    </div>
+</div>

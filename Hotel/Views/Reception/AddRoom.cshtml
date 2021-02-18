@@ -1,0 +1,38 @@
+﻿@model AddRoomViewModel
+<h2>Добавление новой комнаты</h2>
+<form method="post" asp-controller="Reception" asp-action="AddRoom">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div>
+        <label asp-for="Name"></label><br />
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <label asp-for="Local"></label><br />
+        <input asp-for="Local" />
+        <span asp-validation-for="Local"></span>
+    </div>
+    <div>
+        <label asp-for="Desc"></label><br />
+        <input asp-for="Desc" />
+        <span asp-validation-for="Desc"></span>
+    </div>
+    <div>
+        <label asp-for="Image"></label><br />
+        <input asp-for="Image" />
+        <span asp-validation-for="Image"></span>
+    </div>
+    <div>
+        <label asp-for="Floor"></label><br />
+        <input asp-for="Floor" />
+        <span asp-validation-for="Floor"></span>
+    </div>
+    <div>
+        <label asp-for="Price"></label><br />
+        <input asp-for="Price" />
+        <span asp-validation-for="Price"></span>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary">Добавить</button>
+    </div>
+</form>

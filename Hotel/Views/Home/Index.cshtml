@@ -1,0 +1,36 @@
+﻿<head>
+    <link rel="stylesheet" href="~/css/gradientBut.css" />
+</head>
+@model IEnumerable<Hotel.Data.Entities.Room>
+<table class="table">
+    <tr>
+        <td><b>Вид номера</b></td>
+        <td><b>Количество комнат</b></td>
+        <td><b>Стоимость за сутки</b></td>
+        <td></td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Local</td>
+            <td>@item.Price₽</td>
+            <td>
+                @if (User.IsInRole("client") && item.Available)
+                {
+                    <a class="pressed-button" asp-controller="Order" asp-action="Ordered" asp-route-roomId="@item.Id">Забронировать</a>
+                }
+                <a class="pressed-button" asp-controller="Home" asp-action="RoomId" asp-route-roomId="@item.Id">Подробнее</a>
+            </td>
+        </tr>
+    }
+</table>
+@if (TempData["alert"] != null)
+{
+    <footer class="border-top" style="text-align:center; background-color:indianred">
+        <div class="alert">
+            <span class="closebtn"style="color: white" onclick="this.parentElement.style.display='none';">&times;</span>
+            @TempData["alert"]
+        </div>
+    </footer>
+}
